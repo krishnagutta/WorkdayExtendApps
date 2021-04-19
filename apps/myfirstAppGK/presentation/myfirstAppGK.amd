@@ -1,0 +1,12 @@
+{
+  "applicationId": "myfirstAppGK",
+  "tasks": [
+    {
+      "id": "root",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    }
+  ]
+}

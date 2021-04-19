@@ -1,0 +1,19 @@
+{
+  "id": "myfirstAppGK",
+  "siteId": "myfirstAppGK",
+  "siteAuth": {
+    "authTypes": [
+      {
+        "id": "sso",
+        "scheme": "SSO"
+      }
+    ]
+  },
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "applicationId": "myfirstAppGK"
+}
