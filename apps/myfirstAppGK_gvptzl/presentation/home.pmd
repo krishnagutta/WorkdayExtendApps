@@ -1,0 +1,52 @@
+
+{
+  "id": "home",
+  "endPoints":[
+    {
+      "name": "loggedinUser",
+      "baseUrlType": "Workday-Common",
+      "url": "/workers/me?view=workerSummary",
+      "authType": "sso"
+    },
+    {
+      "name": "getworkeraccess",
+      "baseUrlType": "workday-wql",
+      "_url": "/data?query=select%20cf_aPP003ExclusionSG%2C%20preferredName_FirstName%20from%20allActiveEmployees%20where%20workdayID%20%3D%20'${loggedinUser.id}'",
+      "url": "<% 'data?query=' + string:urlEncode('SELECT cf_aPP006EligibilitySecurityGroup FROM allWorkers WHERE workdayID = \"' + loggedinUser.id + '\"') %>",
+      "authType": "wcpisu1"
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "richText",
+          "id": "hello",
+          "label": "Hello World!",
+          "value": "<% loggedinUser %>"
+        },
+        {
+          "type": "richText",
+          "id": "helloq",
+          "label": "Hello World!",
+          "value": "<% getworkeraccess %>"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

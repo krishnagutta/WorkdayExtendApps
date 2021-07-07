@@ -1,0 +1,26 @@
+{
+  "applicationId": "myfirstAppGK_gvptzl",
+  "dataProviders": [
+    {
+      "key": "ghCustomList",
+      "value": "https://api.workday.com/customObjectDefinition/v1/fieldTypes"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/"
+    },
+    {
+      "key": "Workday-Common",
+      "value": "https://api.workday.com/common/v1"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "root",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "activateJobTemplate",
+  "endPoints": [
+    {
+      "name": "ghJobTemplate",
+      "baseUrlType": "ghCustomList",
+      "url": "/94738e7836e001c252c069613e004902/listValues",
+      "authType": "wcpisu1"
+    },
+    {
+      "name": "getJTById",
+      "baseUrlType": "ghCustomList",
+      "url": "<% '/94738e7836e001c252c069613e004902/listValues/' + queryParams.inactivejobid %>",
+      "authType": "wcpisu1"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "postListValues",
+        "url": "<% '/94738e7836e001c252c069613e004902/listValues/' + getJTById.id %>",
+        "baseUrlType": "ghCustomList",
+        "authType": "wcpisu1",
+        "httpMethod": "PUT",
+        "onSend": "<% {
+            'descriptor': getJTById.descriptor,
+            'inactive': false,
+            'alias': getJTById.alias,
+            'order': getJTById.order,
+            'name': getJTById.name
+        } %>"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "HIDDEN",
+    "pageType": "edit",
+    "micro": true,
+    "microFirstPageOnly": true,
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "fieldSet",
+          "id": "inactiverow4",
+          "title": "Confirm Inactivation",
+          "children": [
+            {
+              "type": "text",
+              "id": "Job Template Name",
+              "label": "Date",
+              "enabled": false,
+              "value": "<% getJTById.alias %>"
+            },
+            {
+              "type": "text",
+              "id": "wid",
+              "label": "WID",
+              "enabled": false,
+              "value": "<% getJTById.id %>"
+            },
+            {
+              "type": "text",
+              "id": "id",
+              "label": "Inactive ID",
+              "enabled": false,
+              "value": "<% queryParams.inactivejobid %>",
+              "visible": true
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By PT Team"
+        }
+      ]
+    }
+  }
+}

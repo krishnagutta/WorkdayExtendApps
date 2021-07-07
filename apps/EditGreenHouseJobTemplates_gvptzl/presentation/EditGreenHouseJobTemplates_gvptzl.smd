@@ -1,0 +1,28 @@
+{
+  "id" : "EditGreenHouseJobTemplates_gvptzl",
+  "languages" : [ {
+    "code" : "en-US",
+    "description" : "English"
+  } ],
+  "siteAuth" : {
+    "authTypes" : [
+      {
+        "id" : "wcpisu1",
+        "scheme" : "WCPISU",
+        "tokenEndpoint": "https://auth.api.workday.com/v1/token",
+        "appId" : "EditGreenHouseJobTemplates_gvptzl",
+        "tokenHolder" : "INT501_GreenHouseJobTemplate_ISU",
+        "checkEnvironment" : "false"
+      },
+      {
+        "id" : "sso",
+        "scheme" : "SSO"
+      }
+    ]
+  },
+  "siteId" : "EditGreenHouseJobTemplates_gvptzl",
+  "cdnEnabled" : true,
+  "siteProperties" : [ ],
+  "applicationId" : "EditGreenHouseJobTemplates_gvptzl",
+  "headerBackgroundColor": "#26422c"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "addNewTemplate",
+  "endPoints": [
+    {
+      "name": "ghJobTemplateupdate",
+      "baseUrlType": "ghCustomList",
+      "url": "/94738e7836e001c252c069613e004902/listValues",
+      "authType": "wcpisu1"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "postListValues",
+        "url": "<% '/94738e7836e001c252c069613e004902/listValues' %>",
+        "baseUrlType": "ghCustomList",
+        "authType": "wcpisu1",
+        "httpMethod": "POST",
+        "onSend": "<% {
+            'descriptor': addJobTemplateName.value,
+            'inactive': false,
+            'alias': addWebServiceAlias.value,
+            'order': newordercount.value,
+            'name': addJobTemplateName.value
+        } %>"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Add New Template",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "addJobTemplateName",
+          "label": "Job Template Name"
+        },
+        {
+          "type": "text",
+          "id": "addWebServiceAlias",
+          "label": "Job Template WebService Alias"
+        },
+        {
+          "type": "number",
+          "id": "ordercount",
+          "label": "Order Count",
+          "value": "<% queryParams.orderCount %>",
+          "enabled": false,
+          "visible": false
+        },
+        {
+          "type": "number",
+          "id": "newordercount",
+          "label": "Next Order Count",
+          "value": "<% ordercount.value + 5 %>",
+          "enabled": false
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By PT Team"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "id": "home",
+  "endPoints": [
+    {
+      "name": "ghJobTemplate",
+      "baseUrlType": "ghCustomList",
+      "url": "/94738e7836e001c252c069613e004902/listValues",
+      "authType": "wcpisu1"
+    },
+    {
+      "name": "loggedinUser",
+      "baseUrlType": "Workday-Common",
+      "url": "/workers/me?view=workerSummary",
+      "authType": "sso"
+    },
+    {
+       "name": "getworkeraccess",
+       "baseUrlType": "workday-wql",
+       "_url": "/data?query=select%20cf_aPP003ExclusionSG%2C%20preferredName_FirstName%20from%20allActiveEmployees%20where%20workdayID%20%3D%20'${loggedinUser.id}'",
+      "url": "<% 'data?query=' + string:urlEncode('SELECT cf_aPP006EligibilitySecurityGroup FROM allWorkers WHERE workdayID = \"' + loggedinUser.id + '\"') %>",
+      "authType": "wcpisu1"
+     }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Green House Job Templates",
+      "render": "<% getworkeraccess.data[0].cf_aPP006EligibilitySecurityGroup %>"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "text",
+          "render": "<% getworkeraccess.data[0].cf_aPP006EligibilitySecurityGroup == false %>",
+          "value": "You dont have access to this Feature"
+        },
+      {
+      "type": "section",
+      "render": "<% getworkeraccess.data[0].cf_aPP006EligibilitySecurityGroup %>",
+      "children": [
+        {
+          "type": "button",
+          "id": "addNewJobTemplateId",
+          "label": "Add New Job Template",
+          "taskReference": {
+            "type": "taskReference",
+            "taskId": "addNewTemplate",
+            "parameterBindings": {
+              "orderCount": "<% ghJobTemplate.total %>"
+            }
+
+          },
+          "action": "PRIMARY"
+        },
+        {
+          "type": "grid",
+          "id": "gh.apiResponseGrid",
+          "label": "Green House Job Data in Grid",
+          "rows": "<% ghJobTemplate.data %>",
+          "rowVariableName": "gh.apiData",
+          "columns": [
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% gh.apiData.name %>"
+              },
+              "columnId": "col1",
+              "label": "Name",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% gh.apiData.descriptor %>"
+              },
+              "columnId": "col2",
+              "label": "Descriptor",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% gh.apiData.alias %>"
+              },
+              "columnId": "col3",
+              "label": "Web Service Alias",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% gh.apiData.inactive %>"
+              },
+              "columnId": "col4",
+              "label": "Status",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "section",
+                "children": [
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "render": "<% gh.apiData.inactive == true %>",
+                    "label": "Activate",
+                    "taskReference": {
+                      "taskId": "inactivateJobTemplate",
+                      "parameterBindings": {
+                        "inactivejobid": "<% gh.apiData.id %>"
+                      }
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "render": "<% gh.apiData.inactive == false %>",
+                    "label": "Inactivate",
+                    "taskReference": {
+                      "taskId": "activateJobTemplate",
+                      "parameterBindings": {
+                        "inactivejobid": "<% gh.apiData.id %>"
+                      }
+                    }
+                  }
+                ]
+              },
+              "columnId": "col5",
+              "label": "Inactivate/ Activate",
+              "type": "column"
+            }
+          ]
+        }
+
+      ]
+    }
+    ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By People Tech"
+        }
+      ]
+    }
+  }
+}
