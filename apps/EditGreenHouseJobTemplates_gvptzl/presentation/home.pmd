@@ -18,7 +18,7 @@
        "baseUrlType": "workday-wql",
        "_url": "/data?query=select%20cf_aPP003ExclusionSG%2C%20preferredName_FirstName%20from%20allActiveEmployees%20where%20workdayID%20%3D%20'${loggedinUser.id}'",
       "url": "<% 'data?query=' + string:urlEncode('SELECT cf_aPP006EligibilitySecurityGroup FROM allWorkers WHERE workdayID = \"' + loggedinUser.id + '\"') %>",
-      "authType": "sso"
+      "authType": "wcpisu1"
      }
   ],
   "presentation": {
