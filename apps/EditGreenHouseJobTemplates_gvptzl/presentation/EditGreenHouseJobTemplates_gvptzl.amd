@@ -28,6 +28,13 @@
       "page": {
         "id": "activateJobTemplate"
       }
+    },
+    {
+      "id": "EditJobTemplate",
+      "routingPattern": "EditJobTemplate",
+      "page": {
+        "id": "EditJobTemplate"
+      }
     }
   ],
   "applicationId": "EditGreenHouseJobTemplates_gvptzl",
@@ -43,6 +50,10 @@
     {
       "key": "Workday-Common",
       "value": "https://api.workday.com/common/v1"
+    },
+    {
+      "key": "Workday-RaaS",
+      "value": "https://api.workday.com/raas/superuser"
     }
   ]
 }

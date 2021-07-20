@@ -4,15 +4,22 @@
     {
       "name": "ghJobTemplateupdate",
       "baseUrlType": "ghCustomList",
-      "url": "/94738e7836e001c252c069613e004902/listValues",
+      "url": "/51b551c44d42010a3e050af99c39c40b/listValues",
       "authType": "wcpisu1"
+    },
+    {
+      "name": "ghListReport",
+      "baseUrlType": "workday-wql",
+      "url": "<% 'data?query=' + string:urlEncode('SELECT webServiceAlias as alias FROM allCustomListValues (customListAll = (51b551c44d42010a3e050af99c39c40b)) WHERE customList in (51b551c44d42010a3e050af99c39c40b) and webServiceAlias = \"' + id + '\"') %>",
+      "authType": "wcpisu1",
+      "deferred": true
     }
   ],
   "outboundData": {
     "outboundEndPoints": [
       {
         "name": "postListValues",
-        "url": "<% '/94738e7836e001c252c069613e004902/listValues' %>",
+        "url": "<% '/51b551c44d42010a3e050af99c39c40b/listValues' %>",
         "baseUrlType": "ghCustomList",
         "authType": "wcpisu1",
         "httpMethod": "POST",
@@ -46,7 +53,29 @@
         {
           "type": "text",
           "id": "addWebServiceAlias",
-          "label": "Job Template WebService Alias"
+          "label": "Job Template ID",
+          "helpText": "Please add 't' before the Job ID if not already for example 4479882002 is t4479882002",
+          "onChange": "<%
+                       var searchData = ghListReport.invoke({'id':addWebServiceAlias.value});
+          if (!empty(searchData.data[0])){
+                       verifywebservicealias.value = searchData.data[0].alias;
+                       }
+          else {
+              verifywebservicealias.value = null;
+          }
+                       %>"
+        },
+        {
+          "type": "text",
+          "visible": false,
+          "id":"verifywebservicealias",
+          "validations": [
+            {
+              "errorMessage": "Job Template ID is already used.",
+              "expression": "${verifywebservicealias.value != addWebServiceAlias.value}",
+              "onSubmitOnly": true
+            }
+          ]
         },
         {
           "type": "number",
@@ -60,18 +89,8 @@
           "type": "number",
           "id": "newordercount",
           "label": "Next Order Count",
-          "value": "<% ordercount.value + 5 %>",
+          "value": "<% ordercount.value + 1 %>",
           "enabled": false
-        }
-      ]
-    },
-    "footer": {
-      "type": "footer",
-      "children": [
-        {
-          "type": "richText",
-          "enabled": "false",
-          "value": "Powered By PT Team"
         }
       ]
     }

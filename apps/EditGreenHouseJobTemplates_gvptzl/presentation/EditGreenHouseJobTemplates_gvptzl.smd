@@ -11,8 +11,8 @@
         "scheme" : "WCPISU",
         "tokenEndpoint": "https://auth.api.workday.com/v1/token",
         "appId" : "EditGreenHouseJobTemplates_gvptzl",
-        "tokenHolder" : "INT501_GreenHouseJobTemplate_ISU",
-        "checkEnvironment" : "false"
+        "tokenHolder" : "APP006_GreenHouseJobTemplate_ISU",
+        "checkEnvironment" : "true"
       },
       {
         "id" : "sso",

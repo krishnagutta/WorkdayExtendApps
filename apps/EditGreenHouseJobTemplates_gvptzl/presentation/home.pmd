@@ -2,9 +2,9 @@
   "id": "home",
   "endPoints": [
     {
-      "name": "ghJobTemplate",
-      "baseUrlType": "ghCustomList",
-      "url": "/94738e7836e001c252c069613e004902/listValues",
+      "name": "ghListReport",
+      "baseUrlType": "workday-wql",
+      "url": "<% 'data?query=' + string:urlEncode('SELECT customListValueName as name, webServiceAlias as alias, workdayID as id, inactive FROM allCustomListValues (customListAll = (51b551c44d42010a3e050af99c39c40b)) WHERE customList in (51b551c44d42010a3e050af99c39c40b) ORDER BY inactive ASC') %>",
       "authType": "wcpisu1"
     },
     {
@@ -47,18 +47,18 @@
             "type": "taskReference",
             "taskId": "addNewTemplate",
             "parameterBindings": {
-              "orderCount": "<% ghJobTemplate.total %>"
+              "orderCount": "<% ghListReport.total %>"
             }
-
           },
           "action": "PRIMARY"
         },
         {
           "type": "grid",
           "id": "gh.apiResponseGrid",
-          "label": "Green House Job Data in Grid",
-          "rows": "<% ghJobTemplate.data %>",
+          "label": "Green House Job Data",
+          "rows": "<% ghListReport.data %>",
           "rowVariableName": "gh.apiData",
+
           "columns": [
             {
               "cellTemplate": {
@@ -66,16 +66,8 @@
                 "value": "<% gh.apiData.name %>"
               },
               "columnId": "col1",
-              "label": "Name",
-              "type": "column"
-            },
-            {
-              "cellTemplate": {
-                "type": "text",
-                "value": "<% gh.apiData.descriptor %>"
-              },
-              "columnId": "col2",
-              "label": "Descriptor",
+              "sortableAndFilterable": "true",
+              "label": "Job Template Name",
               "type": "column"
             },
             {
@@ -83,69 +75,72 @@
                 "type": "text",
                 "value": "<% gh.apiData.alias %>"
               },
-              "columnId": "col3",
-              "label": "Web Service Alias",
+              "columnId": "col2",
+              "label": "Job Template ID",
+              "sortableAndFilterable": "true",
               "type": "column"
             },
             {
               "cellTemplate": {
-                "type": "text",
-                "value": "<% gh.apiData.inactive %>"
+                "type": "button",
+                "action": "SECONDARY",
+                "label": "Edit",
+                "taskReference": {
+                  "taskId": "EditJobTemplate",
+                  "parameterBindings": {
+                    "editjobid": "<% gh.apiData.id %>"
+                  }
+                }
               },
-              "columnId": "col4",
-              "label": "Status",
+              "columnId": "col3",
+              "label": "Job Template ID",
+              "sortableAndFilterable": "true",
               "type": "column"
             },
             {
               "cellTemplate": {
                 "type": "section",
+                "enabled": false,
+                "visible": false,
+                "render": false,
                 "children": [
                   {
                     "type": "button",
-                    "action": "AUXILIARY",
+                    "action": "SECONDARY",
                     "render": "<% gh.apiData.inactive == true %>",
                     "label": "Activate",
                     "taskReference": {
-                      "taskId": "inactivateJobTemplate",
+                      "taskId": "activateJobTemplate",
                       "parameterBindings": {
-                        "inactivejobid": "<% gh.apiData.id %>"
+                        "editjobid": "<% gh.apiData.id %>"
                       }
                     }
                   },
                   {
                     "type": "button",
-                    "action": "AUXILIARY",
+                    "action": "PRIMARY",
                     "render": "<% gh.apiData.inactive == false %>",
                     "label": "Inactivate",
                     "taskReference": {
-                      "taskId": "activateJobTemplate",
+                      "taskId": "inactivateJobTemplate",
                       "parameterBindings": {
-                        "inactivejobid": "<% gh.apiData.id %>"
+                        "editjobid": "<% gh.apiData.id %>"
                       }
                     }
                   }
                 ]
               },
               "columnId": "col5",
+              "sortableAndFilterable": "true",
               "label": "Inactivate/ Activate",
-              "type": "column"
+              "type": "column",
+              "render": false
             }
           ]
         }
-
       ]
     }
     ]
-    },
-    "footer": {
-      "type": "footer",
-      "children": [
-        {
-          "type": "richText",
-          "enabled": "false",
-          "value": "Powered By People Tech"
-        }
-      ]
     }
   }
 }

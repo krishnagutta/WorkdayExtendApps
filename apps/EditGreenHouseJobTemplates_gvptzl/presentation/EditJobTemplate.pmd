@@ -1,0 +1,84 @@
+{
+  "id": "EditJobTemplate",
+  "endPoints": [
+    {
+      "name": "ghJobTemplate",
+      "baseUrlType": "ghCustomList",
+      "url": "/51b551c44d42010a3e050af99c39c40b/listValues",
+      "authType": "wcpisu1"
+    },
+    {
+      "name": "getJTById",
+      "baseUrlType": "ghCustomList",
+      "url": "<% '/51b551c44d42010a3e050af99c39c40b/listValues/' + queryParams.editjobid %>",
+      "authType": "wcpisu1"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "postListValues",
+        "url": "<% '/51b551c44d42010a3e050af99c39c40b/listValues/' + getJTById.id %>",
+        "baseUrlType": "ghCustomList",
+        "authType": "wcpisu1",
+        "httpMethod": "PUT",
+        "onSend": "<% {
+            'descriptor': newdescriptor.value,
+            'inactive': newstatus.value,
+            'alias': newalias.value,
+            'order': getJTById.order,
+            'name': newdescriptor.value
+        } %>"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "HIDDEN",
+    "pageType": "edit",
+    "micro":true,
+    "microFirstPageOnly": true,
+    "title": {
+      "type": "title",
+      "label": "Workday Extend",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "title": "Edit Job Template",
+      "children": [
+        {
+          "type": "text",
+          "id": "newdescriptor",
+          "label": "Job Template Name",
+          "value": "<% getJTById.name %>",
+          "enabled": true
+        },
+        {
+          "type": "text",
+          "id": "newalias",
+          "label": "Job Template ID",
+          "value": "<% getJTById.alias %>",
+          "enabled": false
+        },
+        {
+          "type": "checkBox",
+          "id": "newstatus",
+          "label": "Inactive",
+          "onChange": "<% newstatusvalue.value = newstatus.value; %>",
+          "value": "<% getJTById.inactive %>",
+          "enabled": true
+        },
+        {
+          "type": "text",
+          "render": false,
+          "enabled": false,
+          "visible": false,
+          "id": "newstatusvalue",
+          "label": "Inactive Value",
+          "value": "<% newstatus.value %>"
+        }
+      ]
+    }
+  }
+}
