@@ -132,7 +132,7 @@
               },
               "columnId": "col5",
               "sortableAndFilterable": "true",
-              "label": "Inactivate/ Activater",
+              "label": "Inactivate/ Activatr",
               "type": "column",
               "render": false
             }
