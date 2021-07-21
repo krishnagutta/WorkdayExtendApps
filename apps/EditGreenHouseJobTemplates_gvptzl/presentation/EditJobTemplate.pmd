@@ -65,18 +65,8 @@
           "type": "checkBox",
           "id": "newstatus",
           "label": "Inactive",
-          "onChange": "<% newstatusvalue.value = newstatus.value; %>",
           "value": "<% getJTById.inactive %>",
           "enabled": true
-        },
-        {
-          "type": "text",
-          "render": false,
-          "enabled": false,
-          "visible": false,
-          "id": "newstatusvalue",
-          "label": "Inactive Value",
-          "value": "<% newstatus.value %>"
         }
       ]
     }
